@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authenticated</title>
+</head>
+<body>
+<h1>Hellow authenticated user</h1>
+<p th:text="${user.getUsername()}"></p>
+<p th:text="${user.getEmail()}"></p>
+<br><br>
+<a href="/logout">Выйти</a>
+</body>
+</html>

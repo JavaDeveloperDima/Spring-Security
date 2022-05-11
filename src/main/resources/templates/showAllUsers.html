@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Все люди</title>
+</head>
+<body>
+<div th:each = "user : ${userList}">
+   <a th:href="@{api/{id}(id=${user.getId()})}" th:text="${user.getUsername()}"></a>
+    <a th:text="${user.getUsername()}"></a>
+    <a th:text="${user.getEmail()}"></a>
+</div>
+<br/>
+<hr/>
+<a href="/api/new">Create New</a>
+<!--<form action="addUser.html">-->
+<!--    <button>Add New User</button>-->
+<!--</form>-->
+</body>
+</html>
