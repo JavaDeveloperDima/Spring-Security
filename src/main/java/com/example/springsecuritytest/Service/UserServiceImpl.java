@@ -1,8 +1,6 @@
 package com.example.springsecuritytest.Service;
 
 import com.example.springsecuritytest.Entity.Role;
-import com.example.springsecuritytest.Excaption.UserHaveAlreadyExists;
-import com.example.springsecuritytest.Excaption.UserNotFoundExcaption;
 import com.example.springsecuritytest.Repositories.UserRepository;
 import com.example.springsecuritytest.Entity.User;
 import com.example.springsecuritytest.config.Encoder;
@@ -20,7 +18,7 @@ import java.util.Optional;
 
 
 @Service
-public class UserServiceClass implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService,UserService {
     @Autowired
     private Encoder encoder;
     @Autowired
@@ -34,37 +32,35 @@ public class UserServiceClass implements UserDetailsService {
         }
         return user;
     }
+    @Override
     public User findByUsername(String name){
         return userRepository.findByUsername(name);
     }
-
+    @Override
     public User findUserById(int id){
-        Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()){
-            return optionalUser.get();
-        }else{
-            throw new UsernameNotFoundException("Пользователь с id "+id+" не найден");
-        }
+       return userRepository.findById(id).orElseThrow(()->
+               new UsernameNotFoundException("User with id "+ id + "not found"));
     }
+    @Override
     public boolean removeById(int id){
         if(userRepository.findById(id).isPresent()){
             userRepository.deleteById(id);
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
+    @Override
+    @Transactional
     public boolean saveUser(User user)  {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-        if(userFromDb != null){
-            return false;
-        }else {
+        if((userRepository.findByUsername(user.getUsername()))== null){
             user.setRoles(Collections.singleton(new Role("ROLE_USER")));
             user.setPassword(encoder.getPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
             return  true;
         }
+        return false;
     }
+    @Override
     public List<User> getAll(){
         return userRepository.findAll();
     }

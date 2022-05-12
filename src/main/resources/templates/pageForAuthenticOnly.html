@@ -9,6 +9,8 @@
 <p th:text="${user.getUsername()}"></p>
 <p th:text="${user.getEmail()}"></p>
 <br><br>
-<a href="/logout">Выйти</a>
+<form th:method="GET" th:action="@{/logout}">
+<input type="submit" value="Выйти"/>
+</form>
 </body>
 </html>

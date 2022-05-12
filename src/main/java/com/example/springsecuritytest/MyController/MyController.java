@@ -1,40 +1,36 @@
 package com.example.springsecuritytest.MyController;
 
-import com.example.springsecuritytest.Entity.Role;
 import com.example.springsecuritytest.Entity.User;
-import com.example.springsecuritytest.Service.UserServiceClass;
+import com.example.springsecuritytest.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-@RequestMapping("/api")
 public class MyController {
     @Autowired
-    private UserServiceClass userServiceClass;
-    @GetMapping()
+    private UserService userService;
+    @GetMapping("/api")
     public String getAll(Model model){
-        List<User> list = userServiceClass.getAll();
+        List<User> list = userService.getAll();
         model.addAttribute("userList",list);
         return "showAllUsers";
     }
-    @GetMapping("/{id}")
+    @GetMapping("/api/{id}")
     public String getFromId(@PathVariable int id, Model model){
-        model.addAttribute("user",userServiceClass.findUserById(id));
-        return "showInfo";
+        model.addAttribute("user", userService.findUserById(id));
+        return "showUserInfo";
 
     }
-    @GetMapping("/{id}/edit")
+    @GetMapping("/api/{id}/edit")
     public String edit(@PathVariable("id")int id,Model model){
-        User user = userServiceClass.findUserById(id);
+        User user = userService.findUserById(id);
         model.addAttribute("user" +
                 "",user);
-        return "edit";
+        return "updateUsersPage";
     }
     @GetMapping("/new")
     public String getFormAddNewUSer(Model model){
@@ -42,22 +38,22 @@ public class MyController {
         model.addAttribute("user",user);
         return "addUser";
     }
-    @PostMapping("/delete/{id}")
+    @PostMapping("/api/delete/{id}")
     public String deleteEmpl(@PathVariable int id){
-       if(userServiceClass.removeById(id)){
+       if(userService.removeById(id)){
            return "redirect:/api";
        }else {
            return "User with id "+ id +" dose not exist";
        }
     }
-    @PostMapping("/update/{id}")
+    @PostMapping("/api/update/{id}")
     public String update(@ModelAttribute("user")User user){
-        userServiceClass.saveUser(user);
+        userService.saveUser(user);
         return "redirect:/api";
     }
-    @PostMapping("/addNewUser")
+    @PostMapping("/api/addNewUser")
     public String addNewUser(@ModelAttribute("user")User user){
-        if(userServiceClass.saveUser(user)){
+        if(userService.saveUser(user)){
             return "redirect:/api";
         }else {
             return "User with name " + user.getUsername() + " have already exist";

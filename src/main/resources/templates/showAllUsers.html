@@ -12,9 +12,13 @@
 </div>
 <br/>
 <hr/>
-<a href="/api/new">Create New</a>
-<!--<form action="addUser.html">-->
-<!--    <button>Add New User</button>-->
-<!--</form>-->
+<form th:method="GET" th:action="@{/new}">
+    <input type="submit" value="Добавить"/>
+</form>
+
+<br><br>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="Выйти"/>
+</form>
 </body>
 </html>

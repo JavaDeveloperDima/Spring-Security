@@ -1,4 +1,4 @@
-package com.example.springsecuritytest.Excaption;
+package com.example.springsecuritytest.Exception;
 
 public class UserHaveAlreadyExists extends Throwable{
     public UserHaveAlreadyExists(String message) {

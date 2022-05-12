@@ -11,6 +11,9 @@
 <form th:method="POST" th:action="@{/api/delete/{id}(id=${user.getId()})}">
     <input type="submit" value="delete"/>
 </form>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="Выйти"/>
+</form>
 
 </body>
 </html>

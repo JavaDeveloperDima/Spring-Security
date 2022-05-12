@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PageForAll</title>
+</head>
+<body>
+<h1>Hellow EveryBody</h1>
+<br><br>
+<a href="/login">Войти</a>
+<form th:method="POST" th:action="@{/login}">
+    <input type="submit" value="Войти"/>
+</form>
+<br><br>
+<form th:method="GET" th:action="@{/new}">
+    <input type="submit" value="Зарегистрироваться"/>
+</form>
+</body>
+</html>
